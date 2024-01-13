@@ -1,6 +1,6 @@
 import { PerspectiveCamera } from 'three';
 
-function createCamera() {
+function createCamera(x, y, z) {
   const camera = new PerspectiveCamera(
     35, // punto
     1, // aspect ratio (dummy value)
@@ -9,7 +9,7 @@ function createCamera() {
   );
 
   // x, y, z 0, 0, 0 la camra se posiciona en el centro
-  camera.position.set(0, 0, 10);
+  camera.position.set(x, y, z);
 
   return camera;
 }
