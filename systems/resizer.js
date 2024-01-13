@@ -3,7 +3,7 @@ class Resizer {
       // ponemos el tamaño de la escena
       camera.aspect = container.clientWidth / container.clientHeight;
   
-      // pixeles
+      // actualiza frustum
       camera.updateProjectionMatrix();
   
       // update the size of the renderer AND the canvas
