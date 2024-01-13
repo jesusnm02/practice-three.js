@@ -1,8 +1,8 @@
-import { BoxBufferGeometry, Mesh, MeshBasicMaterial } from 'three';
+import { BoxGeometry, Mesh, MeshBasicMaterial } from 'three';
 
 function createCube() {
   // creamos la geometria
-  const geometry = new BoxBufferGeometry(2, 2, 2);
+  const geometry = new BoxGeometry(2, 2, 2);
 
   // definimos el material
   const material = new MeshBasicMaterial();
