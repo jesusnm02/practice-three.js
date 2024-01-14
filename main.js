@@ -1,4 +1,4 @@
-import { World, geometryCone } from './subcomponentes/world.js';
+import { World, geometryCone, geometryLathe } from './subcomponentes/world.js';
 import { geometryCapsule } from './subcomponentes/world.js';
 import { geometryCircle } from './subcomponentes/world.js';
 function main() {
@@ -45,10 +45,19 @@ class showGeometries {
     // 2. Render the scene
     geomtries.render();
     }
+    
+    showlathe() {
+      const container = document.querySelector('#lathe');
+
+      const geomtries = new geometryLathe(container);
+
+      geomtries.render();
+    }
 }
 
 const geometrieswieber = new showGeometries();
 geometrieswieber.showCapsule();
 geometrieswieber.showCircle();
 geometrieswieber.showCone();
+geometrieswieber.showlathe();
 main();

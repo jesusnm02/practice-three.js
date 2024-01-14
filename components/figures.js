@@ -1,5 +1,5 @@
 import { BoxGeometry, Mesh, MeshBasicMaterial, CapsuleGeometry, CircleGeometry, MeshStandardMaterial
-, ConeGeometry  } from 'three';
+, ConeGeometry, Vector2, LatheGeometry  } from 'three';
 
 const spec = {
   color: 'purple',
@@ -60,4 +60,17 @@ function createCone(radius, height, lados) {
   return cone;
 }
 
-export { createCube, createCapsula, createCircle, createCone };
+function createLatheGeometry() {
+  const points = [];
+  for ( let i = 0; i < 18; i ++ ) {             //Radius
+	points.push( new Vector2( Math.sin( i * 0.2 ) * 20 + 5, ( i - 5 ) * 2 ) );
+  }
+  const geometry = new LatheGeometry( points );
+  const material = new MeshStandardMaterial( { color: 0xffff00 } );
+  const lathe = new Mesh( geometry, material )
+  lathe.rotation.set(15, 0, 0);
+
+  return lathe;
+}
+
+export { createCube, createCapsula, createCircle, createCone, createLatheGeometry };

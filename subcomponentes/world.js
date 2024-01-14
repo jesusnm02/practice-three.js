@@ -4,6 +4,7 @@ import { createScene } from '../components/scene.js';
 import { createCapsula } from '../components/figures.js';
 import { createCircle } from '../components/figures.js';
 import { createCone } from '../components/figures.js';
+import { createLatheGeometry } from '../components/figures.js';
 
 import { createRenderer } from '../systems/renderes.js';
 import { Resizer } from '../systems/resizer.js';
@@ -89,11 +90,11 @@ class geometryCone {
     renderer = createRenderer_ilumination();
     container.append(renderer.domElement);
 
-    const circle = createCone(20, 20, 4);
+    const cone = createCone(20, 20, 4);
 
-    const light = luces.Directionalight();
+    const light = luces.SpotLight();
 
-    scene.add(circle, light);
+    scene.add(cone, light);
 
     const resizer = new Resizer(container, camera, renderer);
   }
@@ -103,4 +104,26 @@ class geometryCone {
     renderer.render(scene, camera);
   }
 }
-export { World, geometryCapsule, geometryCircle, geometryCone };
+
+class geometryLathe {
+  constructor(container) {
+    camera = createCamera(0, 0, 80);
+    scene = createScene();
+    renderer = createRenderer_ilumination();
+    container.append(renderer.domElement);
+
+    const lathe = createLatheGeometry();
+
+    const light = luces.RectAreaLight();
+
+    scene.add(lathe, light);
+
+    const resizer = new Resizer(container, camera, renderer);
+  }
+
+  render() {
+    // draw a single frame
+    renderer.render(scene, camera);
+  }
+}
+export { World, geometryCapsule, geometryCircle, geometryCone, geometryLathe };
