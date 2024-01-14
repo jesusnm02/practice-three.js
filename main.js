@@ -1,5 +1,6 @@
-import { World } from './subcomponentes/world.js';
+import { World, geometryCone } from './subcomponentes/world.js';
 import { geometryCapsule } from './subcomponentes/world.js';
+import { geometryCircle } from './subcomponentes/world.js';
 function main() {
   // Get a reference to the container element
   const container = document.querySelector('#scene-container');
@@ -11,7 +12,8 @@ function main() {
   world.render();
 }
 
-function showGeometries() {
+class showGeometries {
+  showCapsule() {
   // Get a reference to the container element
   const container = document.querySelector('#capsule');
 
@@ -20,10 +22,33 @@ function showGeometries() {
 
   // 2. Render the scene
   geomtries.render();
-
-
+  }
   //////////////CIRCLE----------------
+  showCircle() {
+    // Get a reference to the container element
+    const container = document.querySelector('#circle');
+  
+    // 1. Create an instance of the World app
+    const geomtries = new geometryCircle(container);
+  
+    // 2. Render the scene
+    geomtries.render();
+    }
+
+  showCone() {
+    // Get a reference to the container element
+    const container = document.querySelector('#cone');
+  
+    // 1. Create an instance of the World app
+    const geomtries = new geometryCone(container);
+  
+    // 2. Render the scene
+    geomtries.render();
+    }
 }
 
-showGeometries();
+const geometrieswieber = new showGeometries();
+geometrieswieber.showCapsule();
+geometrieswieber.showCircle();
+geometrieswieber.showCone();
 main();

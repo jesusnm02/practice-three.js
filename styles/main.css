@@ -31,3 +31,7 @@ body {
     background-color: skyblue;
   }
   
+#scene-container {
+  visibility: hidden;
+}  
+  

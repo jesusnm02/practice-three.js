@@ -21,6 +21,25 @@
   </div>
   <div id="capsule">
   </div>
-</body>
+  <div id="circle">
+  </div>
+  <div id="cone">
+  </div>
+  <button onclick="toggleVisibility()" >Mostrar Cubo</button>
 
+
+
+  <script>
+    function toggleVisibility() {
+      var myDiv = document.getElementById('scene-container');
+  
+      // Toggle entre visible e invisible
+      if (myDiv.style.visibility === 'hidden') {
+        myDiv.style.visibility = 'visible';
+      } else {
+        myDiv.style.visibility = 'hidden';
+      }
+    }
+  </script>
+</body>
 </html>
