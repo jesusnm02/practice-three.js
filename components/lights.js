@@ -42,7 +42,7 @@ class Lights {
    const width = 20;
    const height = 20;
    const intensity = 10;
-   const rectLight = new RectAreaLight( 0xffffff, intensity,  width, height );
+   const rectLight = new RectAreaLight( 0xffffff , intensity,  width, height );
    rectLight.position.set( 5, 5, 10 );
 
    return rectLight;

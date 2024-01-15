@@ -11,6 +11,34 @@ import { Resizer } from '../systems/resizer.js';
 import { createRenderer_ilumination } from '../systems/renderer_ilumination.js';
 import { Lights } from '../components/lights.js';
 
+import { Vector3 } from 'three';
+import { Euler } from 'three';
+import { MathUtils } from 'three';
+
+//----------------SIRVE PARA GUARDAR VECTORES Y LUEGO UTILIZARLOS---------------
+const vector = new Vector3(1, 2, 3);
+
+vector.x; // 1
+vector.y; // 2
+vector.z; // 3
+
+vector.x = 5;
+
+vector.x; // 5
+
+vector.set(7, 7, 7);
+
+vector.x; // 7
+vector.y; // 7
+vector.z; // 7
+
+/*-------------------------------------------------------------------------------------------
+mesh.position = new Vector3();
+mesh.position.x; // 0
+mesh.position.y; // 0
+mesh.position.z; // 0
+------------------------------------------------------------------------------------------------*/
+
 // These variables are module-scoped: we cannot access them
 // from outside the module
 let camera;
@@ -26,11 +54,37 @@ class World {
     renderer = createRenderer_ilumination();
     container.append(renderer.domElement);
 
-    const cube = createCube();
+    const cube1 = createCube();
+    const cube2 = createCube();
+
+    const cone =createCone();
+
+
+    //----USAMOS LAS ESCALAS .scale();
+    cone.scale.set(1, 1, 1);//su tamaño aumenta un 100% osea se mantiene igual
+    cube2.scale.set(2, -2, 2);//su tamaño aumenta un 200% osea se duplica
+    cube1.scale.set(.5, .5, .5);// su tamaño aumenta un 50% osea se reduce a la mitad
+    //-------------------------------
+
+    /*----USAMOS ROTATION CON ANGLE EULER---------------------
+    cone.rotation = new Euler();
+    cone.rotation.set(1, 1, 1);
+    -------------------------------------------------------*/
+
+    //-----------USAMOS RADICIONES PARA ROTAR OBJETOS-------
+    cube2.rotation.x = MathUtils.degToRad(60);
+    //-----------------------------------------------
 
     const light = luces.Directionalight();
 
-    scene.add(cube, light);
+    scene.add(cube1, light, cone);//scene es el padre de cube 1
+    cube1.position.y = 1.5;
+    cone.position.y = -1;
+
+    cube1.add(cube2);//cube1 es padre de cube
+
+
+    cube2.position.y = -3.5;
 
     const resizer = new Resizer(container, camera, renderer);
   }
@@ -117,6 +171,10 @@ class geometryLathe {
     const light = luces.RectAreaLight();
 
     scene.add(lathe, light);
+
+    //podemos realizar cambio de posiciones de la figuras
+    const lathe1 = scene.children[0];//podemos llamar a los hijos de las escenas, por array o por su llegada en la escena
+    lathe1.position.y = -7;
 
     const resizer = new Resizer(container, camera, renderer);
   }
