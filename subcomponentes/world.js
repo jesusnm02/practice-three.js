@@ -5,11 +5,12 @@ import { createCapsula } from '../components/figures.js';
 import { createCircle } from '../components/figures.js';
 import { createCone } from '../components/figures.js';
 import { createLatheGeometry } from '../components/figures.js';
+import { Lights } from '../components/lights.js';
 
 import { createRenderer } from '../systems/renderes.js';
 import { Resizer } from '../systems/resizer.js';
 import { createRenderer_ilumination } from '../systems/renderer_ilumination.js';
-import { Lights } from '../components/lights.js';
+import { Loop } from '../systems/Loop.js';
 
 import { Vector3 } from 'three';
 import { Euler } from 'three';
@@ -44,6 +45,7 @@ mesh.position.z; // 0
 let camera;
 let renderer;
 let scene;
+let loop;
 
 
 const luces = new Lights();
@@ -52,13 +54,17 @@ class World {
     camera = createCamera(0, 0, 10);
     scene = createScene();
     renderer = createRenderer_ilumination();
+
+    loop = new Loop(camera, scene, renderer);
     container.append(renderer.domElement);
 
     const cube1 = createCube();
     const cube2 = createCube();
 
     const cone =createCone();
-
+  //Enviamos el objecto----------------------------
+  loop.updatables.push(cube1);
+  //------------------------------------------------
 
     //----USAMOS LAS ESCALAS .scale();
     cone.scale.set(1, 1, 1);//su tamaño aumenta un 100% osea se mantiene igual
@@ -74,7 +80,7 @@ class World {
     //-----------USAMOS RADICIONES PARA ROTAR OBJETOS-------
     cube2.rotation.x = MathUtils.degToRad(60);
     //-----------------------------------------------
-
+    
     const light = luces.Directionalight();
 
     scene.add(cube1, light, cone);//scene es el padre de cube 1
@@ -82,16 +88,28 @@ class World {
     cone.position.y = -1;
 
     cube1.add(cube2);//cube1 es padre de cube
+    cube1.rotation.x = MathUtils.degToRad(30);
 
 
     cube2.position.y = -3.5;
+    cube2.updateMatrix();
 
     const resizer = new Resizer(container, camera, renderer);
+    /*resizer.onResize = () => {  esto es para que cuando se encoga la pantalla se vuelva a renderizar
+      this.render();
+    };*/
   }
 
   render() {
     // draw a single frame
     renderer.render(scene, camera);
+  }
+  start() {
+    loop.start();
+  }
+  
+  stop() {
+    loop.stop();
   }
 }
 

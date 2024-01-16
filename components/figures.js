@@ -1,5 +1,5 @@
 import { BoxGeometry, Mesh, MeshBasicMaterial, CapsuleGeometry, CircleGeometry, MeshStandardMaterial
-, ConeGeometry, Vector2, LatheGeometry  } from 'three';
+, ConeGeometry, Vector2, LatheGeometry, MathUtils  } from 'three';
 
 const spec = {
   color: 'purple',
@@ -7,6 +7,8 @@ const spec = {
   }
   
 const material = new MeshStandardMaterial(spec);
+
+const radiansPerSecond = MathUtils.degToRad(30);
 
 function createCube() {
   // creamos la geometria
@@ -19,7 +21,14 @@ function createCube() {
   const cube = new Mesh(geometry, material);
 
   cube.rotation.set(-0.5, -0.1, 0.8);//rotamos el cubo
-
+//enviamos las animaciones
+  cube.tick = (delta) => {
+    //con delta hacemos que la velocidad de la animacion no cambie, aunque el ordenador sea lento, aunque si puede cambiar la velocidad de las fotogramas
+    // increase the cube's rotation each frame, esto gira de 30 grados por segundo
+    cube.rotation.z += radiansPerSecond * delta;
+    cube.rotation.x += radiansPerSecond * delta;
+    cube.rotation.y += radiansPerSecond * delta;
+};
   return cube;
 }
 
