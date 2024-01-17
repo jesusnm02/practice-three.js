@@ -43,7 +43,7 @@ class showGeometries {
     const geomtries = new geometryCone(container);
   
     // 2. Render the scene
-    geomtries.render();
+    geomtries.start();
     }
     
     showlathe() {

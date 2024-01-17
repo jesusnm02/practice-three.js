@@ -47,7 +47,6 @@ let renderer;
 let scene;
 let loop;
 
-
 const luces = new Lights();
 class World {
   constructor(container) {
@@ -61,9 +60,9 @@ class World {
     const cube1 = createCube();
     const cube2 = createCube();
 
-    const cone =createCone();
+    const cone = createCone();
   //Enviamos el objecto----------------------------
-  loop.updatables.push(cube1);
+    loop.updatables.push(cube1);
   //------------------------------------------------
 
     //----USAMOS LAS ESCALAS .scale();
@@ -157,14 +156,29 @@ class geometryCircle {
 
 class geometryCone {
   constructor(container) {
-    camera = createCamera(0, 0, 80);
+    const camera = createCamera(0, 0, 80);
     scene = createScene();
     renderer = createRenderer_ilumination();
+    loop = new Loop(camera, scene, renderer);
     container.append(renderer.domElement);
 
+
     const cone = createCone(20, 20, 4);
+    //hacemos que la camara se aleje del objeto
+    camera.tick = (delta) => {
+      camera.position.z += 2 *delta;
+    }
 
     const light = luces.SpotLight();
+
+    //hacemos que la luz tambien puede rotar dentro de la escena
+    light.tick = (delta) => {
+      light.position.x += MathUtils.degToRad(180) * delta;
+    }
+
+    
+    loop.updatables.push(camera, light)
+
 
     scene.add(cone, light);
 
@@ -174,6 +188,13 @@ class geometryCone {
   render() {
     // draw a single frame
     renderer.render(scene, camera);
+  }
+  start() {
+    loop.start();
+  }
+  
+  stop() {
+    loop.stop();
   }
 }
 

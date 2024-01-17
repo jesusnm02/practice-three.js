@@ -8,7 +8,7 @@ const spec = {
   
 const material = new MeshStandardMaterial(spec);
 
-const radiansPerSecond = MathUtils.degToRad(30);
+const radiansPerSecond = MathUtils.degToRad(360);
 
 function createCube() {
   // creamos la geometria
@@ -28,6 +28,7 @@ function createCube() {
     cube.rotation.z += radiansPerSecond * delta;
     cube.rotation.x += radiansPerSecond * delta;
     cube.rotation.y += radiansPerSecond * delta;
+    cube.position.x += (102 % 10) * delta;
 };
   return cube;
 }
@@ -65,6 +66,7 @@ function createCone(radius, height, lados) {
   const cone = new Mesh(geometry, material);
 
   cone.rotation.set(5, 5, 16);
+
 
   return cone;
 }
