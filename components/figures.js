@@ -1,5 +1,5 @@
 import { BoxGeometry, Mesh, MeshBasicMaterial, CapsuleGeometry, CircleGeometry, MeshStandardMaterial
-, ConeGeometry, Vector2, LatheGeometry, MathUtils  } from 'three';
+, ConeGeometry, Vector2, LatheGeometry, MathUtils, TextureLoader, RepeatWrapping } from 'three';
 
 const spec = {
   color: 'purple',
@@ -10,12 +10,40 @@ const material = new MeshStandardMaterial(spec);
 
 const radiansPerSecond = MathUtils.degToRad(360);
 
+const createMaterial = () => {
+  //creamos el generador de textura
+  const textureLoader = new TextureLoader();
+
+  const texture = textureLoader.load(
+    '../image/foco.jpg',
+    );
+    texture.wrapS = RepeatWrapping;
+    texture.wrapT = RepeatWrapping;
+    //el renderizamos de latextura comienza desde el punto indicado .5, .5 es el centro
+    texture.center.set(.2, .5);
+    //con el siguiente comando repetimos la imagen en la cara de la figura
+    texture.repeat.set( 2, 4 );
+    //con esto podemos girar las imagenes o las texturas
+    texture.rotation = Math.PI * .3;
+    //Cuánto se desplaza una sola repetición de la textura desde el principio, 
+    //en cada dirección U y V. El rango típico 0.0 es 1.0.
+    texture.offset.set(1, 1);
+
+    //more information for jisus (https://threejs.org/docs/#api/en/textures/Texture)
+
+    const material = new MeshStandardMaterial({
+      map: texture,
+    });
+  
+  return material;
+
+}
 function createCube() {
   // creamos la geometria
   const geometry = new BoxGeometry(2, 2, 2);
 
   // definimos el material
-  const material = new MeshStandardMaterial( { color: "purple" } );
+  const material = createMaterial();
 
   // creamos la malla
   const cube = new Mesh(geometry, material);
@@ -42,6 +70,13 @@ function createCapsula(radius, lenght, seg, radseg) {
   const capsule = new Mesh( geometry, material ); 
 
   capsule.rotation.set(5, 3, 5);
+  capsule.tick = (delta) => {
+    //con delta hacemos que la velocidad de la animacion no cambie, aunque el ordenador sea lento, aunque si puede cambiar la velocidad de las fotogramas
+    // increase the cube's rotation each frame, esto gira de 30 grados por segundo
+    cube.rotation.z += radiansPerSecond * delta;
+    cube.rotation.x += radiansPerSecond * delta;
+    cube.rotation.y += radiansPerSecond * delta;
+};
   
   return capsule;
 }

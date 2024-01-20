@@ -11,6 +11,7 @@ import { createRenderer } from '../systems/renderes.js';
 import { Resizer } from '../systems/resizer.js';
 import { createRenderer_ilumination } from '../systems/renderer_ilumination.js';
 import { Loop } from '../systems/Loop.js';
+import { createControls } from '../systems/controls.js';
 
 import { Vector3 } from 'three';
 import { Euler } from 'three';
@@ -118,10 +119,17 @@ class geometryCapsule {
     scene = createScene();
     renderer = createRenderer_ilumination();
     container.append(renderer.domElement);
-
+//llamamos el controlador de camara y enviamos los datos necesrios
+    const controls = createControls(camera, renderer.domElement);
+//controls.target.set(1,2,3);
+//Si necesita un objetivo fijo, puede desactivar la panorámica usando controls.enablePan = false.
     const capsule = createCapsula(10, 10);
 
+    controls.target.copy(capsule.position);
+
     const light = luces.PointLight();
+
+    loop.updatables.push(controls);
 
     scene.add(capsule, light);
 
@@ -140,6 +148,7 @@ class geometryCircle {
     scene = createScene();
     renderer = createRenderer();
     container.append(renderer.domElement);
+//llamamos al controlador de camara
 
     const circle = createCircle(20, 3, 0, 6.2);
 
