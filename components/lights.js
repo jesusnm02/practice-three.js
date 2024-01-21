@@ -1,4 +1,5 @@
-import { DirectionalLight, PointLight, SpotLight, TextureLoader, RectAreaLight } from 'three';
+import { DirectionalLight, PointLight, SpotLight, TextureLoader, RectAreaLight, AmbientLight,
+HemisphereLight } from 'three';
 
 class Lights {
  Directionalight() {
@@ -48,6 +49,29 @@ class Lights {
    return rectLight;
 
    //Get more information HERE JISUS(https://threejs.org/docs/#api/en/lights/RectAreaLight)
+ }
+
+ //esta luz iluminado todos los objetos
+ AmbientLight() {
+   //amientLight ilumina todos los objetos === (no muestra profundidad)
+   const ambientLight = new AmbientLight('white', 1);//la intensidad menor para directional produzca ese efecto de sombra
+
+   const mainLight = new DirectionalLight('white', 8);
+   mainLight.position.set(10, 10, 10);
+
+   return { ambientLight, mainLight };
+ }
+
+
+ //es similar a AmbientLight, pero es mas barato, tambien depnde de otros luces, para produces mejores efectos
+ HemisphereLight() {
+   const ambientLight = new HemisphereLight(
+      'white', // color que produce
+      'darkslategrey', // color de reflejo que produce
+      5, // intensity
+      //position
+    )
+    return ambientLight
  }
 }
 

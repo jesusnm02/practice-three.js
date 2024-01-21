@@ -119,26 +119,39 @@ class geometryCapsule {
     scene = createScene();
     renderer = createRenderer_ilumination();
     container.append(renderer.domElement);
+    loop = new Loop(camera, scene, renderer);
 //llamamos el controlador de camara y enviamos los datos necesrios
     const controls = createControls(camera, renderer.domElement);
 //controls.target.set(1,2,3);
 //Si necesita un objetivo fijo, puede desactivar la panorámica usando controls.enablePan = false.
     const capsule = createCapsula(10, 10);
-
+//hacemos que el objetivo sea the capsule
     controls.target.copy(capsule.position);
 
-    const light = luces.PointLight();
+    //llamamos las luces
+    const { ambientLight, mainLight } = luces.AmbientLight();
 
     loop.updatables.push(controls);
 
-    scene.add(capsule, light);
+    scene.add(capsule, ambientLight, mainLight);
+
+    //camera.add(luces.Directionalight), IMPORTANTE este metodo sirve que cuando se mueva la camara, este ilumine
+    //la zona qque estamos viendo
 
     const resizer = new Resizer(container, camera, renderer);
+
   }
 
   render() {
     // draw a single frame
     renderer.render(scene, camera);
+  }
+  start() {
+    loop.start();
+  }
+  
+  stop() {
+    loop.stop();
   }
 }
 
@@ -175,14 +188,14 @@ class geometryCone {
     const cone = createCone(20, 20, 4);
     //hacemos que la camara se aleje del objeto
     camera.tick = (delta) => {
-      camera.position.z += 2 *delta;
+      camera.position.z += 100 * delta;
     }
 
     const light = luces.SpotLight();
 
     //hacemos que la luz tambien puede rotar dentro de la escena
     light.tick = (delta) => {
-      light.position.x += MathUtils.degToRad(180) * delta;
+      light.position.x += MathUtils.degToRad(360) * delta;
     }
 
     

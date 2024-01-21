@@ -21,7 +21,7 @@ class showGeometries {
   const geomtries = new geometryCapsule(container);
 
   // 2. Render the scene
-  geomtries.render();
+  geomtries.start();
   }
   //////////////CIRCLE----------------
   showCircle() {
