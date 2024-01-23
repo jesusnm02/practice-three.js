@@ -1,5 +1,5 @@
 import { BoxGeometry, Mesh, MeshBasicMaterial, CapsuleGeometry, CircleGeometry, MeshStandardMaterial
-, ConeGeometry, Vector2, LatheGeometry, MathUtils, TextureLoader, RepeatWrapping } from 'three';
+, ConeGeometry, Vector2, LatheGeometry, MathUtils, TextureLoader, RepeatWrapping, SphereGeometry, Group } from 'three';
 
 const spec = {
   color: 'purple',
@@ -64,8 +64,12 @@ function createCube() {
 function createCapsula(radius, lenght, seg, radseg) {
   //creamos la capsula
   const geometry = new CapsuleGeometry(radius, lenght, seg, radseg);
+//con flatShading en material, podemos visualizar los triangulos que conforman la capsule
+  const material = new MeshStandardMaterial( { color: "#F5640C", flatShading: true} );
 
-  const material = new MeshStandardMaterial( { color: "#F5640C"} );
+  /*AQUIIIIIIIII---------------podemos redifinir el nuevo valor de (flatShading)
+  material.flatShading = false;
+  material.needsUpdate = false;*/
 
   const capsule = new Mesh( geometry, material ); 
 
@@ -119,4 +123,44 @@ function createLatheGeometry() {
   return lathe;
 }
 
-export { createCube, createCapsula, createCircle, createCone, createLatheGeometry };
+function createMeshGroup() {
+  const group = new Group();
+
+  const geometry = new SphereGeometry(0.25, 16, 16);
+
+  const material = new MeshStandardMaterial({
+  color: 'indigo',
+  });
+
+  // create one prototype sphere
+  const protoSphere = new Mesh(geometry, material);
+
+  // add the sphere to the group
+  group.add(protoSphere);
+
+  // create twenty clones of the protoSphere
+// and add each to the group
+  for (let i = 0; i < 1; i += 0.05) {
+    const sphere = protoSphere.clone();
+    sphere.position.x = Math.cos(2 * Math.PI * i);
+    sphere.position.y = Math.sin(2 * Math.PI * i);
+    //el tamaño de las esferas clonadas
+    sphere.scale.multiplyScalar(0.01 + i);
+    
+    group.add(sphere);
+  }
+
+  group.scale.multiplyScalar(2);
+
+  const radiansPerSecond = MathUtils.degToRad(30);
+
+// each frame, rotate the entire group of spheres
+  group.tick = (delta) => {
+  group.rotation.z -= delta * radiansPerSecond;
+};
+
+
+  return group;
+}
+
+export { createCube, createCapsula, createCircle, createCone, createLatheGeometry, createMeshGroup };

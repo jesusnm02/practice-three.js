@@ -1,4 +1,4 @@
-import { World, geometryCone, geometryLathe } from './subcomponentes/world.js';
+import { Grupos, Trainers, World, geometryCone, geometryLathe } from './subcomponentes/world.js';
 import { geometryCapsule } from './subcomponentes/world.js';
 import { geometryCircle } from './subcomponentes/world.js';
 function main() {
@@ -53,6 +53,22 @@ class showGeometries {
 
       geomtries.render();
     }
+
+    showSphere() {
+      const container = document.querySelector('#group')
+
+      const geomtries = new Grupos(container)
+
+      geomtries.start()
+    }
+
+    showTrain() {
+      const container = document.querySelector('#train')
+
+      const geometries = new Trainers(container)
+
+      geometries.start()
+    }
 }
 
 const geometrieswieber = new showGeometries();
@@ -60,4 +76,8 @@ geometrieswieber.showCapsule();
 geometrieswieber.showCircle();
 geometrieswieber.showCone();
 geometrieswieber.showlathe();
+geometrieswieber.showTrain();
+
+//mostramos los grupos
+geometrieswieber.showSphere();
 main();

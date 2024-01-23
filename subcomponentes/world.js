@@ -6,6 +6,7 @@ import { createCircle } from '../components/figures.js';
 import { createCone } from '../components/figures.js';
 import { createLatheGeometry } from '../components/figures.js';
 import { Lights } from '../components/lights.js';
+import { createMeshGroup } from '../components/figures.js';
 
 import { createRenderer } from '../systems/renderes.js';
 import { Resizer } from '../systems/resizer.js';
@@ -14,9 +15,10 @@ import { Loop } from '../systems/Loop.js';
 import { createControls } from '../systems/controls.js';
 
 import { Vector3 } from 'three';
-import { Euler } from 'three';
 import { MathUtils } from 'three';
-
+import { Train } from '../components/train/trains.js';
+import { AxesHelper } from 'three';
+import { GridHelper } from 'three';
 //----------------SIRVE PARA GUARDAR VECTORES Y LUEGO UTILIZARLOS---------------
 const vector = new Vector3(1, 2, 3);
 
@@ -245,4 +247,66 @@ class geometryLathe {
     renderer.render(scene, camera);
   }
 }
-export { World, geometryCapsule, geometryCircle, geometryCone, geometryLathe };
+
+class Grupos {
+  constructor(container) {
+    camera = createCamera(0, 0, 20);
+      renderer = createRenderer_ilumination();
+      scene = createScene();
+      loop = new Loop(camera, scene, renderer);
+      container.append(renderer.domElement);
+  
+      const controls = createControls(camera, renderer.domElement);
+      const { ambientLight, mainLight } = luces.AmbientLight();
+      const meshGroup = createMeshGroup();
+  
+      loop.updatables.push(controls, meshGroup);
+      scene.add(ambientLight, mainLight, meshGroup);
+  
+      const resizer = new Resizer(container, camera, renderer);
+    }
+  
+    render() {
+      renderer.render(scene, camera);
+    }
+  
+    start() {
+      loop.start();
+    }
+  
+    stop() {
+      loop.stop();
+    }
+}
+
+class Trainers {
+  constructor(container) {
+    camera = createCamera(0, 0, 20);
+    renderer = createRenderer_ilumination();
+    scene = createScene();
+    loop = new Loop(camera, scene, renderer);
+    container.append(renderer.domElement);
+  
+    const controls = createControls(camera, renderer.domElement);
+    const { ambientLight, mainLight } = luces.AmbientLight();
+    const train = new Train();
+    
+    loop.updatables.push(controls, train);
+    scene.add(ambientLight, mainLight, train);
+  
+    const resizer = new Resizer(container, camera, renderer);
+  
+  }
+  render() {
+    renderer.render(scene, camera);
+  }
+
+  start() {
+    loop.start();
+  }
+
+  stop() {
+    loop.stop();
+  }
+}
+export { World, geometryCapsule, geometryCircle, geometryCone, geometryLathe, Grupos, Trainers };
