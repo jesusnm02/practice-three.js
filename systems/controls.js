@@ -15,7 +15,7 @@ function createControls(camera, canvas) {
     //indica la velocidad de la rotación
     controls.autoRotateSpeed = 5;
     //podemos limitar la distancia del zoom de la camara
-    controls.minDistance = 20;
+    controls.minDistance = 5;
     controls.maxDistance = 60;
 
     //podemos limitar el angulo de giro

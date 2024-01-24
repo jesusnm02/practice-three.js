@@ -289,10 +289,15 @@ class Trainers {
   
     const controls = createControls(camera, renderer.domElement);
     const { ambientLight, mainLight } = luces.AmbientLight();
-    const train = new Train();
-    
-    loop.updatables.push(controls, train);
-    scene.add(ambientLight, mainLight, train);
+
+    for(let x = 0 ; x < 1; x+= .20) {
+      const train = new Train();
+      train.position.x = Math.cos(2 * Math.PI * x) * 4
+      train.position.z = Math.sin(2 * Math.PI * x) * 4
+      train.rotation.y = 2 * Math.PI * x
+      loop.updatables.push(train);
+      scene.add(ambientLight, mainLight, train);
+    }
   
     const resizer = new Resizer(container, camera, renderer);
   

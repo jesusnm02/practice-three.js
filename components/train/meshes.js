@@ -1,4 +1,4 @@
-import { Mesh } from 'three';
+import { MathUtils, Mesh } from 'three';
 
 import { createGeometries } from './geometries.js';
 import { createMaterials } from './materials.js';
@@ -35,6 +35,32 @@ const bigWheel = smallWheelRear.clone();
 bigWheel.position.set(1.5, 0.9, 0);
 bigWheel.scale.set(2, 1.25, 2);
 
+//Feat Of Lego
+const feat_lego = new Mesh(geometries.feat, materials.lego_feat);
+feat_lego.position.set(6, 0, 0);
+
+//creamos el otro pie haciendo una copia
+const copie_feat = feat_lego.clone();
+copie_feat.position.set(6, 0, .5);
+
+//piernas lego
+const leg = new Mesh(geometries.feat_learg, materials.lego_feat);
+leg.position.set(5.8, .4, 0);
+
+const copie_leg = leg.clone()
+copie_leg.position.set(5.8, .4, .5)
+//cuerpo lego
+const body = new Mesh(geometries.body, materials.body_lego);
+body.position.set(6, 1.4, 0);
+
+//creamos los humos
+const humo1 = new Mesh(geometries.humo, materials.humos_color);
+humo1.position.set(-2, 1.9, 0);
+const humo2 = humo1.clone();
+humo2.position.set(-2, 2.3, 0)
+const humo3 = humo1.clone();
+humo3.position.set(-2, 2.7, 0);
+
 return {
     nose,
     cabin,
@@ -43,6 +69,14 @@ return {
     smallWheelCenter,
     smallWheelFront,
     bigWheel,
+    feat_lego,
+    copie_feat,
+    leg, 
+    copie_leg, 
+    body,
+    humo1, 
+    humo2, 
+    humo3,
   };
 }
 
