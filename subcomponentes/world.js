@@ -7,6 +7,7 @@ import { createCone } from '../components/figures.js';
 import { createLatheGeometry } from '../components/figures.js';
 import { Lights } from '../components/lights.js';
 import { createMeshGroup } from '../components/figures.js';
+import { loadBirds } from '../components/pajaros/birds.js';
 
 import { createRenderer } from '../systems/renderes.js';
 import { Resizer } from '../systems/resizer.js';
@@ -47,6 +48,7 @@ mesh.position.z; // 0
 // from outside the module
 let camera;
 let renderer;
+let controls;
 let scene;
 let loop;
 
@@ -314,4 +316,45 @@ class Trainers {
     loop.stop();
   }
 }
-export { World, geometryCapsule, geometryCircle, geometryCone, geometryLathe, Grupos, Trainers };
+
+class GIft {
+  constructor(container) {
+    camera = createCamera(0 ,0, 120);
+    renderer = createRenderer_ilumination();
+    scene = createScene();
+    loop = new Loop(camera, scene, renderer);
+    container.append(renderer.domElement);
+    controls = createControls(camera, renderer.domElement);
+
+    const { ambientLight, mainLight } = luces.AmbientLight();
+
+    loop.updatables.push(controls);
+    scene.add(ambientLight, mainLight);
+
+    const resizer = new Resizer(container, camera, renderer);
+  }
+
+  async init() {
+    const { parrot, flamingo, stork } = await loadBirds();
+
+    controls.target.copy(parrot.position)
+
+    loop.updatables.push(parrot, flamingo, stork);
+    //reto, cuando se haga un click el enfoque cambie de pajaro
+
+    scene.add(parrot, flamingo, stork);
+  }
+
+  render() {
+    renderer.render(scene, camera);
+  }
+
+  start() {
+    loop.start();
+  }
+
+  stop() {
+    loop.stop();
+  }
+}
+export { World, geometryCapsule, geometryCircle, geometryCone, geometryLathe, Grupos, Trainers, GIft };

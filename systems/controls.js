@@ -16,7 +16,7 @@ function createControls(camera, canvas) {
     controls.autoRotateSpeed = 5;
     //podemos limitar la distancia del zoom de la camara
     controls.minDistance = 5;
-    controls.maxDistance = 60;
+    controls.maxDistance = 150;
 
     //podemos limitar el angulo de giro
     controls.minPolarAngle = 0; // comienza desde arriba del target y 

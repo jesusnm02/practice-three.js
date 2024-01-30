@@ -1,4 +1,4 @@
-import { Grupos, Trainers, World, geometryCone, geometryLathe } from './subcomponentes/world.js';
+import { GIft, Grupos, Trainers, World, geometryCone, geometryLathe } from './subcomponentes/world.js';
 import { geometryCapsule } from './subcomponentes/world.js';
 import { geometryCircle } from './subcomponentes/world.js';
 function main() {
@@ -71,6 +71,17 @@ class showGeometries {
     }
 }
 
+//funciones asincronas
+async function gitf() {
+  const container = document.querySelector('#gitf');
+
+  const giftttt = new GIft(container);
+
+  await giftttt.init();
+
+  giftttt.start()
+}
+
 const geometrieswieber = new showGeometries();
 geometrieswieber.showCapsule();
 geometrieswieber.showCircle();
@@ -81,3 +92,7 @@ geometrieswieber.showTrain();
 //mostramos los grupos
 geometrieswieber.showSphere();
 main();
+
+gitf().catch((err) => {
+  console.error(err);
+});
